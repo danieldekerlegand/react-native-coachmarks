@@ -17,6 +17,9 @@ export default class TurtorialStep extends Component {
     onPressMark: PropTypes.func,
     endModal: PropTypes.bool,
     isCircleMask: PropTypes.bool,
+    imagePosition: PropTypes.object,
+    imageSource: PropTypes.number,
+    okButtonPosition: PropTypes.object
   };
 
   static defaultProps = {
@@ -27,7 +30,7 @@ export default class TurtorialStep extends Component {
 
   render() {
     const {
-      tooltip, visible, position, tooltipPosition, okEnable, onPressMark, endModal, isCircleMask,
+      tooltip, visible, position, tooltipPosition, okEnable, onPressMark, endModal, isCircleMask, imagePosition, imageSource, okButtonPosition
     } = this.props;
 
     const firstOverlayWidth = position.left;
@@ -87,25 +90,24 @@ export default class TurtorialStep extends Component {
             }]}
           />
           {!endModal &&
+          <View>
             <View style={[styles.tooltip, tooltipPosition]}>
               <Text style={styles.tooltipText}>{tooltip}</Text>
-              {okEnable && <Button title="OK" onPress={() => this.OKButton()} />}
+              <View style={[styles.okButton, okButtonPosition]}>
+                  {okEnable && <Button title="OK" onPress={() => this.OKButton()} />}
+              </View>
             </View>
+            <View style={[styles.image, imagePosition]}>
+              <Image 
+                    source={imageSource} 
+                    style={styles.image}
+                    />
+            </View>
+          </View>
           }
           {okEnable &&
             <View style={[{ width: this.props.style.width, height: this.props.style.height }, this.props.position]}>
               <View style={[this.props.style, styles.coachMarks]} />
-              {isCircleMask &&
-                <Image
-                  source={lineLogoImg}
-                  resizeMode="stretch"
-                  style={{
-                  flex: 1,
-                  width: null,
-                  height: null,
-                  }}
-                />
-              }
             </View>
           }
           {!okEnable &&
@@ -128,7 +130,7 @@ export default class TurtorialStep extends Component {
                   onPressMark();
                 }}
                   style={{ width: this.props.style.width, height: this.props.style.height }}
-                  activeOpacity={1.0}
+                  activeOpacity={0.8}
                 />
               </View>
             </View>
@@ -145,12 +147,11 @@ export default class TurtorialStep extends Component {
 
 const styles =  StyleSheet.create({
   coachMarks: {
-    position: 'absolute',
+    position: 'absolute'  
   },
   tooltip: {
-    backgroundColor: '#ffffff',
+    backgroundColor: 'transparent',
     borderColor: 'rgba(216, 213, 212, 0.8)',
-    borderRadius: 8,
     overflow: 'hidden',
     position: 'absolute',
     alignSelf: 'center',
@@ -160,13 +161,23 @@ const styles =  StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 16,
   },
+  image: {
+    flex: 1,
+    width: 115,
+    resizeMode: 'contain'
+  },
   tooltipText: {
-    color: 'rgba(0, 0, 0, 0.87)',
+    color: '#f9a847',
     textAlign: 'center',
+    fontSize: 20,
     paddingTop: 5,
     paddingLeft: 5,
     paddingRight: 5,
     paddingBottom: 15,
+  },
+  okButton: {
+    backgroundColor: 'white', 
+    borderRadius: 5    
   },
   backArea: {
     width,
@@ -181,7 +192,7 @@ const styles =  StyleSheet.create({
     height: null,
   },
   overlay: {
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     position: 'absolute',
   },
   button: {
