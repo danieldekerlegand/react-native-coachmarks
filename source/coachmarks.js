@@ -56,6 +56,8 @@ export default class CoachMarks extends Component {
   _onOrientationDidChange = (orientation) => {
     console.log("react-native-coachmarks orientation", orientation);
     const { width, height } = Dimensions.get('window');
+    console.log("width", width);
+    console.log("height", height);
 		this.setState({ height, width });
 	};
 
