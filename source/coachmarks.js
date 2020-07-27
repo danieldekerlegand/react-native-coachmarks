@@ -56,12 +56,13 @@ export default class CoachMarks extends Component {
   _onOrientationDidChange = (orientation) => {
     console.log("react-native-coachmarks orientation", orientation);
     const { width, height } = Dimensions.get('window');
-    console.log("width", width);
-    console.log("height", height);
 		this.setState({ height, width });
 	};
 
   render() {
+    console.log("this.state.height", this.state.height);
+    console.log("this.state.width", this.state.width);
+    
     return (
       <Modal
         animationType="fade"
@@ -73,7 +74,17 @@ export default class CoachMarks extends Component {
       >
         {!this.state.isStarting &&
           <View style={styles.visibleContainer}>
-            <TouchableOpacity style={[styles.backArea, {height: this.state.height, width: this.state.width}]} activeOpacity={1} />
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                backgroundColor:'rgba(0,0,0,0.5)',
+                height: this.state.height, 
+                width: this.state.width
+              }}
+              activeOpacity={1}
+            />
             <View style={styles.scene}>
               <View style={styles.container}>
                {this.props.congratsImage &&
@@ -199,12 +210,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  backArea: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    backgroundColor:'rgba(0,0,0,0.5)',
   },
   container: {
     width: 300,
