@@ -11,13 +11,11 @@ import {
   Button,
   LayoutAnimation,
 } from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 
 import PropTypes from 'prop-types';
 
-
 import TurtorialStep from './tutorialStep';
-
-const { width, height } = Dimensions.get('window');
 
 export default class CoachMarks extends Component {
   static propTypes = {
@@ -30,15 +28,36 @@ export default class CoachMarks extends Component {
     skipCongrats: PropTypes.bool,
   }
 
-  state = {
-    stepStates: [],
-    isStarting: false,
-    isEnding: false,
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      stepStates: [],
+      isStarting: false,
+      isEnding: false,
+      height: 0,
+      width: 0
+    }
   }
 
   componentDidMount() {
     this.setDefaultStepStates();
+
+    const { width, height } = Dimensions.get('window');
+    this.setState({ height, width });
+
+    Orientation.addOrientationListener(this._onOrientationDidChange);
   }
+
+  componentWillUnmount() {
+    Orientation.removeOrientationListener(this._onOrientationDidChange);
+  }
+
+  _onOrientationDidChange = (orientation) => {
+    console.log("react-native-coachmarks orientation", orientation);
+    const { width, height } = Dimensions.get('window');
+		this.setState({ height, width });
+	};
 
   render() {
     return (
@@ -52,7 +71,7 @@ export default class CoachMarks extends Component {
       >
         {!this.state.isStarting &&
           <View style={styles.visibleContainer}>
-            <TouchableOpacity style={styles.backArea} activeOpacity={1} />
+            <TouchableOpacity style={[styles.backArea, {height: this.state.height, width: this.state.width}]} activeOpacity={1} />
             <View style={styles.scene}>
               <View style={styles.container}>
                {this.props.congratsImage &&
@@ -180,8 +199,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backArea: {
-    width,
-    height,
     position: 'absolute',
     top: 0,
     right: 0,
