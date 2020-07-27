@@ -37,7 +37,7 @@ export default class CoachMarks extends Component {
       isEnding: false,
       height: 0,
       width: 0
-    }
+    };
   }
 
   componentDidMount() {
@@ -54,14 +54,16 @@ export default class CoachMarks extends Component {
   }
 
   _onOrientationDidChange = (orientation) => {
-    console.log("react-native-coachmarks orientation", orientation);
     const { width, height } = Dimensions.get('window');
 		this.setState({ height, width });
 	};
 
   render() {
-    console.log("this.state.height", this.state.height);
-    console.log("this.state.width", this.state.width);
+    const height = this.state.height;
+    const width = this.state.width;
+
+    console.log("coachmarks height", height);
+    console.log("coachmarks width", width);
     
     return (
       <Modal
@@ -80,8 +82,8 @@ export default class CoachMarks extends Component {
                 top: 0,
                 right: 0,
                 backgroundColor:'rgba(0,0,0,0.5)',
-                height: this.state.height, 
-                width: this.state.width
+                height, 
+                width
               }}
               activeOpacity={1}
             />

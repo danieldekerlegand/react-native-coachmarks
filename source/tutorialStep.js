@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, StyleSheet, Dimensions, Image, LayoutAnimation, TouchableOpacity,Button } from 'react-native';
-
-const { width, height } = Dimensions.get('window');
+import Orientation from 'react-native-orientation-locker';
 
 export default class TurtorialStep extends Component {
   static propTypes = {
@@ -28,7 +27,38 @@ export default class TurtorialStep extends Component {
     isCircleMask: true,
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      height: 0,
+      width: 0
+    };
+  }
+
+  componentDidMount() {
+    const { width, height } = Dimensions.get('window');
+    this.setState({ height, width });
+
+    Orientation.addOrientationListener(this._onOrientationDidChange);
+  }
+
+  componentWillUnmount() {
+    Orientation.removeOrientationListener(this._onOrientationDidChange);
+  }
+
+  _onOrientationDidChange = (orientation) => {
+    const { width, height } = Dimensions.get('window');
+		this.setState({ height, width });
+	};
+
   render() {
+    const height = this.state.height;
+    const width = this.state.width;
+
+    console.log("tutorialStep height", height);
+    console.log("tutorialStep width", width);
+
     const {
       tooltip, visible, position, tooltipPosition, okEnable, onPressMark, endModal, isCircleMask, imagePosition, imageSource, okButtonPosition
     } = this.props;
@@ -56,7 +86,13 @@ export default class TurtorialStep extends Component {
 
     return (
       visible &&
-        <View style={styles.backArea}>
+        <View style={{
+          width,
+          height,
+          top: 0,
+          right: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0)',
+        }}>
           <View style={[styles.overlay,
             {
               left: firstOverlayX,
@@ -179,13 +215,6 @@ const styles =  StyleSheet.create({
     backgroundColor: 'white', 
     borderRadius: 5    
   },
-  backArea: {
-    width,
-    height,
-    top: 0,
-    right: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-  },
   bgContainer: {
     flex: 1,
     width: null,
@@ -214,14 +243,6 @@ const styles =  StyleSheet.create({
     textAlign: 'center',
     paddingLeft: 3,
     paddingRight: 3,
-  },
-  skipScene: {
-    position: 'absolute',
-    width: 300,
-    height: 70,
-    left: (width - 300) / 2,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   skip: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
