@@ -56,9 +56,6 @@ export default class TurtorialStep extends Component {
     const height = this.state.height;
     const width = this.state.width;
 
-    console.log("tutorialStep height", height);
-    console.log("tutorialStep width", width);
-
     const {
       tooltip, visible, position, tooltipPosition, okEnable, onPressMark, endModal, isCircleMask, imagePosition, imageSource, okButtonPosition
     } = this.props;

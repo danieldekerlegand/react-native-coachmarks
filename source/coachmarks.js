@@ -61,9 +61,6 @@ export default class CoachMarks extends Component {
   render() {
     const height = this.state.height;
     const width = this.state.width;
-
-    console.log("coachmarks height", height);
-    console.log("coachmarks width", width);
     
     return (
       <Modal
