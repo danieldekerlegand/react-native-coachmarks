@@ -92,7 +92,7 @@ export default class CoachMarks extends Component {
                    source={this.props.congratsImage}
                  />
                }
-                <Text style={styles.centeringTxt}>{this.props.congratsText}</Text>
+                <Text allowFontScaling={false} style={styles.centeringTxt}>{this.props.congratsText}</Text>
                 <View style={styles.divider}/>
                 <View style = {styles.button}>
                   <Button title="startTutorial" onPress={() => this.startTutorial()} />

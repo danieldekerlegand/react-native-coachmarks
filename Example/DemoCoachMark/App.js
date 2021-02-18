@@ -36,13 +36,13 @@ export default class App extends Component<Props> {
             source={require('./ic_public.png')}
           />
         </View>
-        <Text style={styles.welcome}>
+        <Text allowFontScaling={false} style={styles.welcome}>
           Welcome to React Native!
         </Text>
-        <Text style={styles.instructions}>
+        <Text allowFontScaling={false} style={styles.instructions}>
           To get started, edit App.js
         </Text>
-        <Text style={styles.instructions}>
+        <Text allowFontScaling={false} style={styles.instructions}>
           {instructions}
         </Text>
         <View style={styles.bottomChildView}>
